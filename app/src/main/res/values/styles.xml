@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="colorControlActivated">@color/greenlight</item> <!-- Warna ketika checked -->
+        <item name="colorControlNormal">@color/black</item> <!-- Warna ketika unchecked -->
+    </style>
+</resources>

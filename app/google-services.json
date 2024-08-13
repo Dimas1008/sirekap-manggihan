@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "381081987597",
+    "firebase_url": "https://manggihan-data-default-rtdb.firebaseio.com",
+    "project_id": "manggihan-data",
+    "storage_bucket": "manggihan-data.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381081987597:android:3a2c9f2bcc672e512ac344",
+        "android_client_info": {
+          "package_name": "com.budyfriend_code.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTSb15nmbO2d1VkaoEtA9AcfYHZh9DXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381081987597:android:b112ccfe104d209d2ac344",
+        "android_client_info": {
+          "package_name": "com.example.myappsampah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTSb15nmbO2d1VkaoEtA9AcfYHZh9DXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381081987597:android:1888241cf33430e22ac344",
+        "android_client_info": {
+          "package_name": "com.example.mysirekapmanggihan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTSb15nmbO2d1VkaoEtA9AcfYHZh9DXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381081987597:android:ef118d02de2aad5b2ac344",
+        "android_client_info": {
+          "package_name": "com.example.mysirekapmanggihan.fragment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfTSb15nmbO2d1VkaoEtA9AcfYHZh9DXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
