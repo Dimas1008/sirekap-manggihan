@@ -56,7 +56,7 @@ class HomeFragmentAdmin : Fragment() {
 
         imgUrl.add("android.resource://" + requireContext().packageName + "/" + R.drawable.img_sampah4)
         imgUrl.add("android.resource://" + requireContext().packageName + "/" + R.drawable.img_sampah3)
-        imgUrl.add("android.resource://" + requireContext().packageName + "/" + R.drawable.img_sampah1)
+        imgUrl.add("android.resource://" + requireContext().packageName + "/" + R.drawable.img_sampah_6)
 
         // Set up the slider adapter
         sliderAdminAdapter = SliderAdminAdapter(imgUrl)
