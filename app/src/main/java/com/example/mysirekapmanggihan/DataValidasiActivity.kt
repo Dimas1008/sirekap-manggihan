@@ -1,16 +1,14 @@
-package com.example.mysirekapmanggihan.fragment
+package com.example.mysirekapmanggihan
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import com.example.mysirekapmanggihan.DataValidasiActivity
-import com.example.mysirekapmanggihan.LoginActivity
-import com.example.mysirekapmanggihan.databinding.FragmentProfileBinding
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.mysirekapmanggihan.databinding.ActivityAdminBinding
+import com.example.mysirekapmanggihan.databinding.ActivityDataValidasiBinding
 import com.example.mysirekapmanggihan.preference.Preferences
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -26,64 +24,39 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ProfileFragment : Fragment() {
+class DataValidasiActivity : AppCompatActivity() {
 
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: ActivityDataValidasiBinding
     private lateinit var preferences: Preferences
-    private lateinit var firebaseRef: DatabaseReference
     private lateinit var databaseRef: DatabaseReference
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        getSupportActionBar()?.hide()
 
-        preferences = Preferences(requireContext())
-        firebaseRef = FirebaseDatabase.getInstance().getReference("users")
+        // Initialize preferences first
+        preferences = Preferences(this)
+
+        // Initialize view binding
+        binding = ActivityDataValidasiBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        enableEdgeToEdge()
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        // Initialize database reference
         databaseRef = FirebaseDatabase.getInstance().getReference("sampah")
 
+        // Retrieve waste data if phone number is available in preferences
         preferences.prefPhone?.let {
-            retrieveUserName(it)
             retrieveWasteData(it)
         }
-
-        binding.cvLogout.setOnClickListener {
-            preferences.prefClear()
-            startActivity(Intent(activity, LoginActivity::class.java).apply {
-                activity?.finish()
-            })
-        }
-
-        binding.cvDataValidasi.setOnClickListener {
-            val intent = Intent(activity, DataValidasiActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private fun retrieveUserName(phoneNumber: String) {
-        firebaseRef.orderByChild("phone").equalTo(phoneNumber)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (userSnapshot in snapshot.children) {
-                        val name = userSnapshot.child("name").getValue(String::class.java)
-                        binding.tvName.text = name ?: "No Name"
-
-                        val address = userSnapshot.child("address").getValue(String::class.java)
-                        binding.tvAddress.text = address ?: "No Address"
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show()
-                }
-            })
     }
 
     private fun retrieveWasteData(phoneNumber: String) {
@@ -103,10 +76,12 @@ class ProfileFragment : Fragment() {
                             val month = getMonthFromDate(tanggal)
                             when (status) {
                                 "Divalidasi" -> {
-                                    validatedDataPerBulan[month] = validatedDataPerBulan.getOrDefault(month, 0f) + berat
+                                    validatedDataPerBulan[month] =
+                                        validatedDataPerBulan.getOrDefault(month, 0f) + berat
                                 }
                                 "Proses" -> {
-                                    processedDataPerBulan[month] = processedDataPerBulan.getOrDefault(month, 0f) + berat
+                                    processedDataPerBulan[month] =
+                                        processedDataPerBulan.getOrDefault(month, 0f) + berat
                                 }
                             }
                         }
@@ -116,7 +91,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DataValidasiActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
             })
     }
@@ -156,7 +131,7 @@ class ProfileFragment : Fragment() {
             barWidth = 0.3f // Mengatur lebar bar
         }
 
-        binding.barChart.apply {
+        binding.barChartValidasi.apply {
             this.data = data
             xAxis.apply {
                 valueFormatter = IndexAxisValueFormatter(labels)
@@ -196,7 +171,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     private class KgValueFormatter : com.github.mikephil.charting.formatter.ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             return "${String.format("%.1f", value)} kg"
@@ -204,19 +178,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getMonthFromDate(dateString: String): String {
-        val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
-        val date = sdf.parse(dateString)
-        date?.let {
-            val calendar = Calendar.getInstance()
-            calendar.time = date
-            val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
-            return monthFormat.format(calendar.time)
+        return try {
+            val sdf = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
+            val date = sdf.parse(dateString)
+            date?.let {
+                val calendar = Calendar.getInstance()
+                calendar.time = date
+                val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+                monthFormat.format(calendar.time)
+            } ?: ""
+        } catch (e: Exception) {
+            ""
         }
-        return ""
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

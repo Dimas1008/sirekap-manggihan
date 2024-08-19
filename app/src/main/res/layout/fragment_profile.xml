@@ -61,8 +61,8 @@
             android:id="@+id/cardView2"
             android:layout_width="match_parent"
             android:layout_height="142dp"
-            android:layout_marginTop="18dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="10dp"
@@ -203,14 +203,14 @@
             android:id="@+id/cardView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDataSampah">
+            app:layout_constraintTop_toBottomOf="@+id/cvDataValidasi">
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChart"
@@ -234,5 +234,27 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView9"
             tools:layout_editor_absoluteX="10dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDataValidasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/greenlight"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDataSampah">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="Data validasi sampah"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
