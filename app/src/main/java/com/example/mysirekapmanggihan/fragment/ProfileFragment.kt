@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.mysirekapmanggihan.DataSampahActivity
 import com.example.mysirekapmanggihan.DataValidasiActivity
 import com.example.mysirekapmanggihan.LoginActivity
 import com.example.mysirekapmanggihan.databinding.FragmentProfileBinding
@@ -51,7 +52,7 @@ class ProfileFragment : Fragment() {
 
         preferences.prefPhone?.let {
             retrieveUserName(it)
-            retrieveWasteData(it)
+//            retrieveWasteData(it)
         }
 
         binding.cvLogout.setOnClickListener {
@@ -63,6 +64,11 @@ class ProfileFragment : Fragment() {
 
         binding.cvDataValidasi.setOnClickListener {
             val intent = Intent(activity, DataValidasiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cvDataSampah.setOnClickListener {
+            val intent = Intent(activity, DataSampahActivity::class.java)
             startActivity(intent)
         }
     }
@@ -85,116 +91,116 @@ class ProfileFragment : Fragment() {
                 }
             })
     }
-
-    private fun retrieveWasteData(phoneNumber: String) {
-        databaseRef.orderByChild("phoneNumber").equalTo(phoneNumber)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val validatedDataPerBulan = mutableMapOf<String, Float>()
-                    val processedDataPerBulan = mutableMapOf<String, Float>()
-
-                    for (dataSnapshot in snapshot.children) {
-                        val berat = dataSnapshot.child("berat").getValue(Int::class.java)
-                        val tanggal = dataSnapshot.child("tanggal").getValue(String::class.java)
-                        val jenis = dataSnapshot.child("jenis").getValue(String::class.java)
-                        val status = dataSnapshot.child("status").getValue(String::class.java)
-
-                        if (berat != null && tanggal != null && jenis != null && status != null) {
-                            val month = getMonthFromDate(tanggal)
-                            when (status) {
-                                "Divalidasi" -> {
-                                    validatedDataPerBulan[month] = validatedDataPerBulan.getOrDefault(month, 0f) + berat
-                                }
-                                "Proses" -> {
-                                    processedDataPerBulan[month] = processedDataPerBulan.getOrDefault(month, 0f) + berat
-                                }
-                            }
-                        }
-                    }
-
-                    updateBarChart(validatedDataPerBulan, processedDataPerBulan)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }
-
-    private fun updateBarChart(
-        validatedDataPerBulan: Map<String, Float>,
-        processedDataPerBulan: Map<String, Float>
-    ) {
-        val validatedEntries = arrayListOf<BarEntry>()
-        val processedEntries = arrayListOf<BarEntry>()
-        val labels = arrayListOf<String>()
-        var index = 0.0f
-        val allMonths = validatedDataPerBulan.keys.union(processedDataPerBulan.keys).sorted()
-
-        for (month in allMonths) {
-            validatedEntries.add(BarEntry(index, validatedDataPerBulan[month] ?: 0f))
-            processedEntries.add(BarEntry(index + 0.2f, processedDataPerBulan[month] ?: 0f))
-            labels.add(month)
-            index += 1f
-        }
-
-        val validatedDataSet = BarDataSet(validatedEntries, "Divalidasi").apply {
-            color = Color.GREEN
-            valueTextColor = Color.BLACK
-            valueTextSize = 14f
-            valueFormatter = KgValueFormatter()
-        }
-
-        val processedDataSet = BarDataSet(processedEntries, "Diproses").apply {
-            color = Color.BLUE
-            valueTextColor = Color.BLACK
-            valueTextSize = 14f
-            valueFormatter = KgValueFormatter()
-        }
-
-        val data = BarData(validatedDataSet, processedDataSet).apply {
-            barWidth = 0.3f // Mengatur lebar bar
-        }
-
-        binding.barChart.apply {
-            this.data = data
-            xAxis.apply {
-                valueFormatter = IndexAxisValueFormatter(labels)
-                position = XAxis.XAxisPosition.BOTTOM
-                granularity = 1f
-                textSize = 12f
-                setDrawGridLines(false)
-                labelRotationAngle = 0f
-            }
-            axisLeft.apply {
-                axisMinimum = 0f
-                textSize = 12f
-                setDrawGridLines(false)
-            }
-            axisRight.isEnabled = false
-            description.isEnabled = false
-            legend.textSize = 12f
-            setFitBars(true)
-
-            val groupSpace = 0.5f
-            val barSpace = 0.05f
-            val barWidth = 0.2f // Sesuaikan lebar bar
-
-            data.barWidth = barWidth
-            this.groupBars(0f, groupSpace, barSpace)
-
-            xAxis.axisMinimum = 0f
-            xAxis.axisMaximum = labels.size.toFloat()
-            xAxis.setCenterAxisLabels(true)
-
-            // Memusatkan bar chart
-            setExtraOffsets(10f, 10f, 10f, 10f)
-            moveViewToX(xAxis.axisMaximum / 2)
-
-            animateY(1000)
-            invalidate()
-        }
-    }
+//
+//    private fun retrieveWasteData(phoneNumber: String) {
+//        databaseRef.orderByChild("phoneNumber").equalTo(phoneNumber)
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    val validatedDataPerBulan = mutableMapOf<String, Float>()
+//                    val processedDataPerBulan = mutableMapOf<String, Float>()
+//
+//                    for (dataSnapshot in snapshot.children) {
+//                        val berat = dataSnapshot.child("berat").getValue(Int::class.java)
+//                        val tanggal = dataSnapshot.child("tanggal").getValue(String::class.java)
+//                        val jenis = dataSnapshot.child("jenis").getValue(String::class.java)
+//                        val status = dataSnapshot.child("status").getValue(String::class.java)
+//
+//                        if (berat != null && tanggal != null && jenis != null && status != null) {
+//                            val month = getMonthFromDate(tanggal)
+//                            when (status) {
+//                                "Divalidasi" -> {
+//                                    validatedDataPerBulan[month] = validatedDataPerBulan.getOrDefault(month, 0f) + berat
+//                                }
+//                                "Proses" -> {
+//                                    processedDataPerBulan[month] = processedDataPerBulan.getOrDefault(month, 0f) + berat
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    updateBarChart(validatedDataPerBulan, processedDataPerBulan)
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    Toast.makeText(context, "Failed to load data", Toast.LENGTH_SHORT).show()
+//                }
+//            })
+//    }
+//
+//    private fun updateBarChart(
+//        validatedDataPerBulan: Map<String, Float>,
+//        processedDataPerBulan: Map<String, Float>
+//    ) {
+//        val validatedEntries = arrayListOf<BarEntry>()
+//        val processedEntries = arrayListOf<BarEntry>()
+//        val labels = arrayListOf<String>()
+//        var index = 0.0f
+//        val allMonths = validatedDataPerBulan.keys.union(processedDataPerBulan.keys).sorted()
+//
+//        for (month in allMonths) {
+//            validatedEntries.add(BarEntry(index, validatedDataPerBulan[month] ?: 0f))
+//            processedEntries.add(BarEntry(index + 0.2f, processedDataPerBulan[month] ?: 0f))
+//            labels.add(month)
+//            index += 1f
+//        }
+//
+//        val validatedDataSet = BarDataSet(validatedEntries, "Divalidasi").apply {
+//            color = Color.GREEN
+//            valueTextColor = Color.BLACK
+//            valueTextSize = 14f
+//            valueFormatter = KgValueFormatter()
+//        }
+//
+//        val processedDataSet = BarDataSet(processedEntries, "Diproses").apply {
+//            color = Color.BLUE
+//            valueTextColor = Color.BLACK
+//            valueTextSize = 14f
+//            valueFormatter = KgValueFormatter()
+//        }
+//
+//        val data = BarData(validatedDataSet, processedDataSet).apply {
+//            barWidth = 0.3f // Mengatur lebar bar
+//        }
+//
+//        binding.barChart.apply {
+//            this.data = data
+//            xAxis.apply {
+//                valueFormatter = IndexAxisValueFormatter(labels)
+//                position = XAxis.XAxisPosition.BOTTOM
+//                granularity = 1f
+//                textSize = 12f
+//                setDrawGridLines(false)
+//                labelRotationAngle = 0f
+//            }
+//            axisLeft.apply {
+//                axisMinimum = 0f
+//                textSize = 12f
+//                setDrawGridLines(false)
+//            }
+//            axisRight.isEnabled = false
+//            description.isEnabled = false
+//            legend.textSize = 12f
+//            setFitBars(true)
+//
+//            val groupSpace = 0.5f
+//            val barSpace = 0.05f
+//            val barWidth = 0.2f // Sesuaikan lebar bar
+//
+//            data.barWidth = barWidth
+//            this.groupBars(0f, groupSpace, barSpace)
+//
+//            xAxis.axisMinimum = 0f
+//            xAxis.axisMaximum = labels.size.toFloat()
+//            xAxis.setCenterAxisLabels(true)
+//
+//            // Memusatkan bar chart
+//            setExtraOffsets(10f, 10f, 10f, 10f)
+//            moveViewToX(xAxis.axisMaximum / 2)
+//
+//            animateY(1000)
+//            invalidate()
+//        }
+//    }
 
 
     private class KgValueFormatter : com.github.mikephil.charting.formatter.ValueFormatter() {

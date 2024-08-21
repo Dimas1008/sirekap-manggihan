@@ -199,29 +199,29 @@
         <!--        app:layout_constraintStart_toStartOf="parent"-->
         <!--        app:layout_constraintTop_toBottomOf="@+id/tvDataSampah" />-->
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/white"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvDataValidasi">
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cardView9"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:backgroundTint="@color/white"-->
+<!--            app:cardCornerRadius="10dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/cvDataSampah">-->
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_margin="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDataSampah" />
+<!--            <com.github.mikephil.charting.charts.BarChart-->
+<!--                android:id="@+id/barChart"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="280dp"-->
+<!--                android:layout_margin="10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tvDataSampah" />-->
 
-        </androidx.cardview.widget.CardView>
+<!--        </androidx.cardview.widget.CardView>-->
 
         <TextView
             android:layout_width="match_parent"
@@ -232,7 +232,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView9"
+            app:layout_constraintTop_toBottomOf="@+id/cvDataSampah"
             tools:layout_editor_absoluteX="10dp" />
 
         <androidx.cardview.widget.CardView
@@ -249,8 +249,32 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:text="Data validasi sampah"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDataSampah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/greenlight"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvDataValidasi">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Data Sampah Perbulan"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
