@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.mysirekapmanggihan.LoginActivity
 import com.example.mysirekapmanggihan.R
@@ -41,6 +42,15 @@ class ProfileFragmentAdmin : Fragment() {
         // Initialize Firebase reference
         firebaseRef = FirebaseDatabase.getInstance().getReference("users")
 
+        // Isi dropdown dusun
+        val jenisSampah = listOf("Dusun 1", "Dusun 2", "Dusun 3")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, jenisSampah)
+        binding.itemEditAuto.setAdapter(adapter)
+
+        val jenisLevel = listOf("admin", "user")
+        val adapterLevel = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, jenisLevel)
+        binding.itemEditLevel.setAdapter(adapterLevel)
+
         binding.tvSend.setOnClickListener {
             saveData()
         }
@@ -54,26 +64,43 @@ class ProfileFragmentAdmin : Fragment() {
     }
 
     private fun saveData() {
+        val dusun = binding.itemEditAuto.text.toString()
         val address = binding.etAddress.text.toString()
-        val date = binding.etDate.text.toString()
         val phone = binding.etPhone.text.toString()
         val name = binding.etName.text.toString()
-        val jeniKelamin = binding.etKelamin.text.toString()
-        val level = binding.etLevel.text.toString()
+        val level = binding.itemEditLevel.text.toString()
         val password = binding.etPassword.text.toString()
 
-        if (address.isEmpty()) binding.etAddress.error = "Silahkan tulis alamat anda"
-        if (date.isEmpty()) binding.etDate.error = "Silahkan tulis tanggal"
-        if (phone.isEmpty()) binding.etPhone.error = "Silahkan tulis nomor telepon"
-        if (name.isEmpty()) binding.etName.error = "Silahkan tulis nama anda"
-        if (jeniKelamin.isEmpty()) binding.etKelamin.error = "Silahkan tulis jenis kelamin anda"
-        if (level.isEmpty()) binding.etLevel.error = "Silahkan tulis level anda"
-        if (password.isEmpty()) binding.etPassword.error = "Silahkan tulis password anda"
+        // Check for empty fields
+        if (dusun.isEmpty()) {
+            binding.itemDusun.error = "Silahkan tulis nama dusun"
+            return
+        }
+        if (address.isEmpty()) {
+            binding.etAddress.error = "Silahkan tulis alamat anda"
+            return
+        }
+        if (phone.isEmpty()) {
+            binding.etPhone.error = "Silahkan tulis nomor telepon"
+            return
+        }
+        if (name.isEmpty()) {
+            binding.etName.error = "Silahkan tulis nama anda"
+            return
+        }
+        if (level.isEmpty()) {
+            binding.itemLevel.error = "Silahkan tulis level anda"
+            return
+        }
+        if (password.isEmpty()) {
+            binding.etPassword.error = "Silahkan tulis password anda"
+            return
+        }
 
-        val contanctId = firebaseRef.push().key.toString()
-        val contacts = Contacts(address, date, name, jeniKelamin, level, password, phone)
+        val contactId = firebaseRef.push().key.toString()
+        val contacts = Contacts(dusun, address, name, level, password, phone)
 
-        firebaseRef.child(contanctId).setValue(contacts)
+        firebaseRef.child(contactId).setValue(contacts)
             .addOnCompleteListener {
                 Toast.makeText(requireContext(), "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
             }
