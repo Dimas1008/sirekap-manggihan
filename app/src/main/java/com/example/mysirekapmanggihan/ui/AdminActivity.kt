@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.mysirekapmanggihan.ChartFragmentAdmin
 import com.example.mysirekapmanggihan.fragment_admin.HomeFragmentAdmin
 import com.example.mysirekapmanggihan.LoginActivity
 import com.example.mysirekapmanggihan.fragment_admin.ProfileFragmentAdmin
@@ -57,6 +58,7 @@ class AdminActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.menu_home_admin -> replaceFragment(HomeFragmentAdmin())
                 R.id.menu_riwayat_admin -> replaceFragment(RiwayatFragmentAdmin())
+                R.id.menu_chart_admin -> replaceFragment(ChartFragmentAdmin())
                 R.id.menu_profile_admin -> replaceFragment(ProfileFragmentAdmin())
                 else -> {
                 }
