@@ -44,7 +44,8 @@ class AdminRiwayatAdapater(private var sampahList: List<Sampah>) :
                 sampahListFiltered = if (charString.isEmpty()) sampahList else {
                     sampahList.filter {
                         it.nama.contains(charString, true) ||
-                        it.status.contains(charString, true)
+                        it.status.contains(charString, true) ||
+                        it.dusun.contains(charString, true)
                     }
                 }
                 val filterResults = FilterResults()
@@ -68,6 +69,7 @@ class AdminRiwayatAdapater(private var sampahList: List<Sampah>) :
         private val alamatTextView: TextView = itemView.findViewById(R.id.tvAlamatAdmin)
         private val jenisTextView: TextView = itemView.findViewById(R.id.tvAdminJenisSampah)
         private val statusTextView: TextView = itemView.findViewById(R.id.tvProsesAdmin)
+        private val dusunTextView: TextView = itemView.findViewById(R.id.tvAdminDusun)
         private val cvAdminEdit: CardView = itemView.findViewById(R.id.cvAdminEdit)
         private val cvAdminHapus: CardView = itemView.findViewById(R.id.cvAdminHapus)
 
@@ -78,6 +80,7 @@ class AdminRiwayatAdapater(private var sampahList: List<Sampah>) :
             statusTextView.text = sampah.status
             namaTextView.text = sampah.nama
             alamatTextView.text = sampah.alamat
+            dusunTextView.text = sampah.dusun
 
             // Menggunakan Glide untuk memuat gambar dari URL
             Glide.with(itemView.context)
@@ -109,9 +112,11 @@ class AdminRiwayatAdapater(private var sampahList: List<Sampah>) :
             val databaseRef = FirebaseDatabase.getInstance().getReference("sampah").child(id)
             databaseRef.removeValue().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(itemView.context, "Data berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, "Data berhasil dihapus", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    Toast.makeText(itemView.context, "Gagal menghapus data", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, "Gagal menghapus data", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

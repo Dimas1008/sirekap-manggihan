@@ -7,14 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import com.example.mysirekapmanggihan.ChartFragmentAdmin
+import com.example.mysirekapmanggihan.fragment_admin.ChartFragmentAdmin
 import com.example.mysirekapmanggihan.fragment_admin.HomeFragmentAdmin
 import com.example.mysirekapmanggihan.LoginActivity
 import com.example.mysirekapmanggihan.fragment_admin.ProfileFragmentAdmin
 import com.example.mysirekapmanggihan.R
 import com.example.mysirekapmanggihan.fragment_admin.RiwayatFragmentAdmin
 import com.example.mysirekapmanggihan.databinding.ActivityAdminBinding
-import com.example.mysirekapmanggihan.fragment.HomeFragment
 import com.example.mysirekapmanggihan.preference.Preferences
 import com.google.firebase.database.DatabaseReference
 

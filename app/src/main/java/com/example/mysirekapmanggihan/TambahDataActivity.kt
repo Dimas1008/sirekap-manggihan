@@ -94,9 +94,11 @@ class TambahDataActivity : AppCompatActivity() {
                     for (userSnapshot in snapshot.children) {
                         val name = userSnapshot.child("name").getValue(String::class.java)
                         val address = userSnapshot.child("address").getValue(String::class.java)
+                        val dusun = userSnapshot.child("dusun").getValue(String::class.java)
 
                         binding.etNama.setText(name ?: "No Name")
                         binding.etAlamat.setText(address ?: "No Address")
+                        binding.etDusun.setText(dusun ?: "No Dusun")
                     }
                 }
 
@@ -138,8 +140,9 @@ class TambahDataActivity : AppCompatActivity() {
         val phoneNumber = preferences.prefPhone ?: return
         val nama = binding.etNama.text.toString().trim()
         val alamat = binding.etAlamat.text.toString().trim()
+        val dusun = binding.etDusun.text.toString().trim()
 
-        if (selectedMaterial.isEmpty() || berat.isEmpty() || tanggal.isEmpty() || nama.isEmpty() || alamat.isEmpty()) {
+        if (selectedMaterial.isEmpty() || berat.isEmpty() || tanggal.isEmpty() || nama.isEmpty() || alamat.isEmpty() || dusun.isEmpty()) {
             Toast.makeText(this, "Harap isi semua kolom", Toast.LENGTH_SHORT).show()
             return
         }
@@ -149,7 +152,7 @@ class TambahDataActivity : AppCompatActivity() {
             return
         }
 
-        uploadData(selectedMaterial, berat, tanggal, phoneNumber, nama, alamat)
+        uploadData(selectedMaterial, berat, tanggal, phoneNumber, nama, alamat, dusun)
     }
 
     private fun uploadData(
@@ -158,7 +161,8 @@ class TambahDataActivity : AppCompatActivity() {
         tanggal: String,
         phoneNumber: String,
         nama: String,
-        alamat: String
+        alamat: String,
+        dusun: String
     ) {
         binding.progresLoading.visibility = View.VISIBLE
         binding.linierLoading.visibility = View.VISIBLE
@@ -180,7 +184,8 @@ class TambahDataActivity : AppCompatActivity() {
                         "imageUrl" to imageUrl,
                         "phoneNumber" to phoneNumber,
                         "nama" to nama,
-                        "alamat" to alamat
+                        "alamat" to alamat,
+                        "dusun" to dusun
                     )
 
                     firebaseRef.push().setValue(sampah)

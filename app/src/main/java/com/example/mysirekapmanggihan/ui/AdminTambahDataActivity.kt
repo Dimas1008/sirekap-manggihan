@@ -56,6 +56,11 @@ class AdminTambahDataActivity : AppCompatActivity() {
         binding = ActivityAdminTambahDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Isi dropdown dusun
+        val jenisSampah = listOf("Dusun 1", "Dusun 2", "Dusun 3")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, jenisSampah)
+        binding.itemEditAuto.setAdapter(adapter)
+
         firebaseRef = FirebaseDatabase.getInstance().getReference("sampah")
         preferences = Preferences(this)
 
@@ -134,8 +139,9 @@ class AdminTambahDataActivity : AppCompatActivity() {
         val phoneNumber = binding.etAdminPhone.text.toString().trim()
         val nama = binding.etAdminNama.text.toString().trim()
         val alamat = binding.etAdminAlamat.text.toString().trim()
+        val dusun = binding.itemEditAuto.text.toString().trim()
 
-        if (selectedMaterial.isEmpty() || berat.isEmpty() || tanggal.isEmpty() || nama.isEmpty() || alamat.isEmpty()) {
+        if (selectedMaterial.isEmpty() || berat.isEmpty() || tanggal.isEmpty() || nama.isEmpty() || alamat.isEmpty() || dusun.isEmpty()) {
             Toast.makeText(this, "Harap isi semua kolom", Toast.LENGTH_SHORT).show()
             return
         }
@@ -145,7 +151,7 @@ class AdminTambahDataActivity : AppCompatActivity() {
             return
         }
 
-        uploadData(selectedMaterial, berat, tanggal, phoneNumber, nama, alamat)
+        uploadData(selectedMaterial, berat, tanggal, phoneNumber, nama, alamat, dusun)
     }
 
     private fun uploadData(
@@ -154,7 +160,8 @@ class AdminTambahDataActivity : AppCompatActivity() {
         tanggal: String,
         phoneNumber: String,
         nama: String,
-        alamat: String
+        alamat: String,
+        dusun: String
     ) {
         binding.progresLoading.visibility = View.VISIBLE
         binding.linierLoading.visibility = View.VISIBLE
@@ -177,7 +184,8 @@ class AdminTambahDataActivity : AppCompatActivity() {
                         "imageUrl" to imageUrl,
                         "phoneNumber" to phoneNumber,
                         "nama" to nama,
-                        "alamat" to alamat
+                        "alamat" to alamat,
+                        "dusun" to dusun
                     )
 
                     firebaseRef.push().setValue(sampah)

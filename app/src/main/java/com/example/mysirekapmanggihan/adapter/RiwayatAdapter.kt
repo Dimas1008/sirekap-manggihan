@@ -22,6 +22,7 @@ class RiwayatAdapter(private val sampahList: List<Sampah>) :
             binding.tvBerat.text = sampah.berat.toString()
             binding.tvProses.text = sampah.status
             binding.tvAlamat.text = sampah.alamat
+            binding.tvDusun.text = sampah.dusun
 
             // Menggunakan Glide untuk memuat gambar dari URL ke ImageView
             Glide.with(binding.ivRiwayatSampah.context).load(sampah.imageUrl).into(binding.ivRiwayatSampah)

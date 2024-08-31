@@ -10,5 +10,6 @@ data class Sampah(
     val imageUrl: String = "",
     val phoneNumber: String = "",
     val nama: String = "",
-    val alamat: String = ""
+    val alamat: String = "",
+    val dusun: String = ""
 )
