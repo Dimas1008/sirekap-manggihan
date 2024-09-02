@@ -89,16 +89,52 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView10"
+            android:id="@+id/cardView99"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView7">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/itemDusun"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shapes"
+                app:cursorColor="@color/black"
+                app:hintEnabled="false"
+                app:hintTextColor="@color/black">
+
+                <AutoCompleteTextView
+                    android:id="@+id/itemEditDusun"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_shapes"
+                    android:hint="Dusun"
+                    android:inputType="none"
+                    android:padding="18dp"
+                    android:textColor="@color/darkgray"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="@+id/cardView"
-            app:layout_constraintTop_toBottomOf="@+id/cardView7">
+            app:layout_constraintTop_toBottomOf="@+id/cardView99">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tfEditAlamat"

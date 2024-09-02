@@ -28,6 +28,12 @@ class AdminEditActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance().reference
 
+        // Isi dropdown dusun
+        val jenisDusun = listOf("Dusun 1", "Dusun 2", "Dusun 3")
+        val adapterDusun =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, jenisDusun)
+        binding.itemEditDusun.setAdapter(adapterDusun)
+
         // Isi dropdown jenis sampah
         val jenisSampah = listOf("Divalidasi", "Proses")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, jenisSampah)
@@ -76,6 +82,7 @@ class AdminEditActivity : AppCompatActivity() {
     private fun loadItemData(itemId: String) {
         database.child("sampah").child(itemId).get().addOnSuccessListener { dataSnapshot ->
             val nama = dataSnapshot.child("nama").value.toString()
+            val dusun = dataSnapshot.child("dusun").value.toString()
             val alamat = dataSnapshot.child("alamat").value.toString()
             val berat = dataSnapshot.child("berat").value.toString()
             val jenis = dataSnapshot.child("jenis").value.toString()
@@ -85,6 +92,7 @@ class AdminEditActivity : AppCompatActivity() {
             val status = dataSnapshot.child("status").value.toString()
 
             binding.etEditNama.setText(nama)
+            binding.itemEditDusun.setText(dusun, false)
             binding.etEditAlamat.setText(alamat)
             binding.etEditKg.setText(berat)
 
@@ -116,6 +124,7 @@ class AdminEditActivity : AppCompatActivity() {
         binding.tvLoading.visibility = View.VISIBLE
 
         val nama = binding.etEditNama.text.toString()
+        val dusun = binding.itemEditDusun.text.toString()
         val alamat = binding.etEditAlamat.text.toString()
         val number = binding.etEditAdminPhone.text.toString()
         val berat = binding.etEditKg.text.toString()
@@ -125,13 +134,15 @@ class AdminEditActivity : AppCompatActivity() {
         val selectedMaterial: String = when (binding.materialRadioGroup.checkedRadioButtonId) {
             R.id.radioLainnya -> binding.editTextLainnya.text.toString()
             else -> {
-                val selectedRadioButton = findViewById<RadioButton>(binding.materialRadioGroup.checkedRadioButtonId)
+                val selectedRadioButton =
+                    findViewById<RadioButton>(binding.materialRadioGroup.checkedRadioButtonId)
                 selectedRadioButton.text.toString()
             }
         }
 
         val item = mapOf(
             "nama" to nama,
+            "dusun" to dusun,
             "jenis" to selectedMaterial,
             "alamat" to alamat,
             "phoneNumber" to number,
